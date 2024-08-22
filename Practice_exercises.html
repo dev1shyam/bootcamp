@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Password Protected Exercises</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-image: url('background.png'); /* Replace with your PNG image URL */
+            background-size: cover; /* Ensure the image covers the entire body */
+            background-position: center; /* Center the background image */
+            background-repeat: no-repeat; /* Prevent the image from repeating */
+            margin: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .container {
+            background-color: rgba(255, 255, 255, 0.9); /* White background with slight transparency */
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            width: 300px;
+            text-align: center;
+            color: #333; /* Ensure text is visible */
+        }
+        h1 {
+            color: #333;
+            margin-bottom: 20px;
+        }
+        select, input, button {
+            margin: 10px 0;
+            padding: 10px;
+            width: calc(100% - 22px); /* Adjust width to account for padding and border */
+            border-radius: 4px;
+            border: 1px solid #ccc;
+            box-sizing: border-box;
+        }
+        button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        #passwordSection {
+            display: none;
+        }
+        label {
+            display: block;
+            font-weight: bold;
+            color: #333;
+        }
+    </style>
+    <script>
+        // Define Gist URLs and passwords
+        const gists = {
+            'day1': {
+                'exercise1': 'https://gist.github.com/DatadogBootcamp/d9e36b0613c8c5c55d2b332e424c933e',  // URL for Day 1, Exercise 1
+                'exercise2': 'https://gist.github.com/username/gist-id-2',  // URL for Day 1, Exercise 2
+                // Add more exercises for Day 1
+            },
+            'day2': {
+                'exercise1': 'https://gist.github.com/username/gist-id-3',  // URL for Day 2, Exercise 1
+                'exercise2': 'https://gist.github.com/username/gist-id-4',  // URL for Day 2, Exercise 2
+                // Add more exercises for Day 2
+            }
+            // Add more days as needed
+        };
+
+        // Define passwords
+        const passwords = {
+            'day1': {
+                'exercise1': 'password1',  // Password for Day 1, Exercise 1
+                'exercise2': 'password2',  // Password for Day 1, Exercise 2
+                // Add more passwords for Day 1
+            },
+            'day2': {
+                'exercise1': 'password3',  // Password for Day 2, Exercise 1
+                'exercise2': 'password4',  // Password for Day 2, Exercise 2
+                // Add more passwords for Day 2
+            }
+            // Add more days as needed
+        };
+
+        function updatePasswordSection() {
+            const day = document.getElementById('day').value;
+            const exercise = document.getElementById('exercise').value;
+            
+            if (day && exercise) {
+                document.getElementById('passwordSection').style.display = 'block';
+                document.getElementById('passwordLabel').textContent = `Enter password for ${day} Exercise ${exercise}:`;
+                document.getElementById('submitBtn').onclick = function() {
+                    checkPassword(day, exercise);
+                };
+            } else {
+                document.getElementById('passwordSection').style.display = 'none';
+            }
+        }
+
+        function checkPassword(day, exercise) {
+            const enteredPassword = document.getElementById('password').value;
+            const correctPassword = passwords[day][exercise];
+            const gistUrl = gists[day][exercise];
+            
+            if (enteredPassword === correctPassword) {
+                // Redirect to the correct Gist URL
+                window.location.href = gistUrl;
+            } else {
+                alert('Incorrect password');
+            }
+        }
+    </script>
+</head>
+<body>
+    <div class="container">
+        <h1>Access Your Exercises</h1>
+        
+        <label for="day">Select a Day:</label>
+        <select id="day" onchange="updatePasswordSection()">
+            <option value="">--Select Day--</option>
+            <option value="day1">Day 1</option>
+            <option value="day2">Day 2</option>
+            <!-- Add more days as needed -->
+        </select>
+        
+        <label for="exercise">Select an Exercise:</label>
+        <select id="exercise" onchange="updatePasswordSection()">
+            <option value="">--Select Exercise--</option>
+            <option value="exercise1">Exercise 1</option>
+            <option value="exercise2">Exercise 2</option>
+            <!-- Add more exercises as needed -->
+        </select>
+        
+        <!-- Password Section -->
+        <div id="passwordSection">
+            <label id="passwordLabel" for="password"></label>
+            <input type="password" id="password" placeholder="Enter Password">
+            <button id="submitBtn">Submit</button>
+        </div>
+    </div>
+</body>
+</html>
+
